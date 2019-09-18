@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/luye-huang/excelJS#readme",
   "dependencies": {
+    "cypress": "^3.4.1",
     "rollup": "^1.21.4"
   }
 }

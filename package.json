@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/luye-huang/excelJS/issues"
   },
-  "homepage": "https://github.com/luye-huang/excelJS#readme"
+  "homepage": "https://github.com/luye-huang/excelJS#readme",
+  "dependencies": {
+    "rollup": "^1.21.4"
+  }
 }

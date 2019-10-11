@@ -15,6 +15,7 @@ module.exports = {
     entry: {
         app: [PATHS.src],
         style: '../scss/main.scss'
+        // '../scss/main.scss' path.join(__dirname, '../scss/main.scss')
     },
     output: {
         path: PATHS.dist,

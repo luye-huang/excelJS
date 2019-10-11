@@ -1,3 +1,4 @@
 // import styles from '../style/main';
-
-alert('222rr');
+import './events/index'
+// alert('222rr');
+console.log(44)

@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -12,7 +13,8 @@ module.exports = {
     context: __dirname,
     mode: 'development',
     entry: {
-        app: [PATHS.src]
+        app: [PATHS.src],
+        style: '../scss/main.scss'
     },
     output: {
         path: PATHS.dist,
@@ -42,28 +44,35 @@ module.exports = {
     devtool: 'eval-sourcemap',
     module: {
         rules: [
-            {
-                test: /.scss$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            camelCase: 'dashes',
-                            localIdentName: '[path][name]__[local]'
-                        }
-                    },
-                    {
-                        loader: 'resolve-url-loader'
-                    },
-                    {
-                        loader: 'sass-loader'
-                    }
-                ]
+
+            { // css / sass / scss loader for webpack
+                test: /\.(css|sass|scss)$/,
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader', 'sass-loader'],
+                })
             },
+            // {
+            //     test: /.scss$/,
+            //     use: [
+            //         {
+            //             loader: 'style-loader'
+            //         },
+            //         {
+            //             loader: 'css-loader',
+            //             options: {
+            //                 modules: true,
+            //                 camelCase: 'dashes',
+            //                 localIdentName: '[path][name]__[local]'
+            //             }
+            //         },
+            //         {
+            //             loader: 'resolve-url-loader'
+            //         },
+            //         {
+            //             loader: 'sass-loader'
+            //         }
+            //     ]
+            // },
             {
                 test: /.jsx?$/,
                 exclude: /node_modules/,
@@ -77,7 +86,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: '../node_modules/html-webpack-template/index.ejs',
+            template: '../src/index.html',
             title: 'Webpack 4 Demo',
             favicon: '../src/favicon.ico',
             meta: [
@@ -95,7 +104,7 @@ module.exports = {
                 }
             ],
             appMountIds: ['app'],
-            inject: false,
+            inject: true,
             minify: {
                 collapseWhitespace: true,
                 conservativeCollapse: true,
@@ -103,6 +112,7 @@ module.exports = {
                 useShortDoctype: true,
                 html5: true
             },
+            // filename: 'index.html',
             mobile: true,
             scripts: ['/static.js']
         }),
@@ -123,6 +133,10 @@ module.exports = {
             VERSION: JSON.stringify('1.2.0'),
             DEBUG: true,
             CODE_FRAGMENT: '80 + 5'
+        }),
+        new ExtractTextPlugin({ // define where to save the file
+            filename: 'dist/[name].bundle.css',
+            allChunks: true,
         })
     ],
     devServer: {

@@ -1,9 +1,10 @@
-
+@import './components/mergingRect.scss';
 
 #main{
     width: 100%;
     height: 100%;
     div {
+        position: relative;
         border-top: 1px solid burlywood;
         row{
             display: flex;

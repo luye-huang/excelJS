@@ -12,6 +12,7 @@ const PATHS = {
 module.exports = {
     context: __dirname,
     mode: 'development',
+    devtool: 'cheap-module-eval-source-map',
     entry: {
         app: [PATHS.src],
         style: '../scss/main.scss'

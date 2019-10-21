@@ -26,6 +26,18 @@ describe('质量平台', function () {
         // for(let i =0; i<7; i++){
         //     lis.eq(i).click()
         // }
+
+        cy.get('aside ul li').eq(0).click()
+        cy.get('aside ul li').eq(1).click()
+        cy.get('aside ul li').eq(2).click()
+        cy.get('aside ul li').eq(3).click()
+        cy.get('aside ul li').eq(4).click()
+        cy.get('aside ul li').eq(5).click()
+        cy.get('aside ul li').eq(6).click()
+
+        // cy.get('input.el-input__inner').type(1000586)
+        // cy.get('i.el-input__icon').click({ multiple: true, timeout: 1000 })
+
         cy.get('aside ul li').eq(0).click()
         cy.get('aside ul li').eq(1).click()
         cy.get('aside ul li').eq(2).click()
@@ -35,7 +47,9 @@ describe('质量平台', function () {
         cy.get('aside ul li').eq(6).click()
 
         cy.get('input.el-input__inner').type(1000586)
-        cy.get('i.el-input__icon').click({multiple: true, timeout: 1000})
-        
+        cy.get('i.el-input__icon').click({ multiple: true, timeout: 1000 })
+
+
+
     })
 })

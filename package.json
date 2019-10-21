@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.1",
-    "reformat-number": "1.0.0"
+    "reformat-number": "1.0.0",
+    "rxjs": "^6.5.3"
   }
 }

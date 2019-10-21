@@ -15,6 +15,7 @@ delegateDom.addEventListener('mousemove', () => {
     }
     // console.log('moving',event)
 })
+
 delegateDom.addEventListener('mouseup', () => {
     if (event.button == 2) {
         console.log(event)

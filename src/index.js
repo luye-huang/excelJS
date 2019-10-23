@@ -1,3 +1,5 @@
+import './events/index'
+import './actions/cell'
 // import { fromEvent, EMPTY, merge } from 'rxjs';
 // import { mapTo, startWith, scan } from 'rxjs/operators';
 
@@ -22,12 +24,22 @@
 
 
 
-import { fromEvent, interval } from 'rxjs';
-import { concatMap, take } from 'rxjs/operators';
- 
-const clicks = fromEvent(document, 'click');
-const result = clicks.pipe(
-  concatMap(ev => interval(1000).pipe(take(4)))
-);
-result.subscribe(x => console.log(x));
+// import { fromEvent, interval } from 'rxjs';
+// import { concatMap, take } from 'rxjs/operators';
+
+// const clicks = fromEvent(document, 'click');
+// const result = clicks.pipe(
+//   concatMap(ev => interval(1000).pipe(take(4)))
+// );
+// result.subscribe(x => console.log(x));
+
+
+// import { interval } from 'rxjs';
+// import { take, withLatestFrom } from 'rxjs/operators';
+// const source$ = interval(500).pipe(take(3))
+// const newest$ = interval(300).pipe(take(6))
+
+// source$.pipe(
+//   withLatestFrom(newest$)
+// ).subscribe(x => console.log(x))// [0, 0]// [1, 2]// [2, 4]
 

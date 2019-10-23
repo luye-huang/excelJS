@@ -1,2 +1,2 @@
 import './global'
-import './delegate'
+// import './delegate'

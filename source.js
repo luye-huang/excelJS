@@ -1,3 +1,4 @@
+"use strict";
 var __generator = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
     return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
@@ -30,3 +31,6 @@ function hh() {
         return [2 /*return*/, 88];
     });
 }
+var p = new Promise(function (reslove) {
+    reslove();
+});

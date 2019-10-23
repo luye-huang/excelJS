@@ -53,28 +53,11 @@ module.exports = {
                     use: ['css-loader', 'sass-loader'],
                 })
             },
-            // {
-            //     test: /.scss$/,
-            //     use: [
-            //         {
-            //             loader: 'style-loader'
-            //         },
-            //         {
-            //             loader: 'css-loader',
-            //             options: {
-            //                 modules: true,
-            //                 camelCase: 'dashes',
-            //                 localIdentName: '[path][name]__[local]'
-            //             }
-            //         },
-            //         {
-            //             loader: 'resolve-url-loader'
-            //         },
-            //         {
-            //             loader: 'sass-loader'
-            //         }
-            //     ]
-            // },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            },
             {
                 test: /.jsx?$/,
                 exclude: /node_modules/,

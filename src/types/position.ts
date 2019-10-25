@@ -1,4 +1,4 @@
-export interface Coordinate {
+export type Coordinate = {
     x: number,
     y: number,
     // job?: string, //可选属性，表示不是必须的参数，

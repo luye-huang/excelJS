@@ -13,7 +13,7 @@ let rect = null
 // const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))
 
 contextmenu$.subscribe((event) => {
-    const x = event.clientX 
+    const x = event.clientX
     const y = event.clientY
     rect = new Rect(x, y)
 })
@@ -37,6 +37,10 @@ mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
     rect.destroy()
     rect = null
 })
+
+// mouseup$.subscribe((x) => {
+//     console.log(x)
+// })
 
 // contextmenu$.pipe(
 //     concatMap(
@@ -82,3 +86,4 @@ mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
 // mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
 //     console.log('right click done')
 // })
+

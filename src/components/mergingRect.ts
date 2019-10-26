@@ -9,7 +9,7 @@ export default class {
         const parent = window.container || {}
         this.offsetTop = parent.offsetTop
         this.offsetLeft = parent.offsetLeft
-        console.log(parent, this.offsetTop, this.offsetLeft)
+        // console.log(parent, this.offsetTop, this.offsetLeft)
         this.el.classList.add('merging-rect')
         this.initialPos = { x, y }
         this.render()

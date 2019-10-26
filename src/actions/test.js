@@ -7,6 +7,10 @@ const delegate = document.getElementById('cluster')
 const contextmenu$ = fromEvent(delegate, 'contextmenu')
 const mousemove$ = fromEvent(delegate, 'mousemove')
 const mouseup$ = fromEvent(delegate, 'mouseup')
-
-concat(contextmenu$.pipe(take(1)), mousemove$).subscribe(console.log)
+contextmenu$.pipe(
+    concatMap(
+        ev0 => mousemove$.pipe(map(ev1 => ({ x0: ev0, x1: ev1 })))
+    )
+).subscribe(event => console.log(event))
+// concat(contextmenu$.pipe(take(1)), mousemove$).subscribe(console.log)
 

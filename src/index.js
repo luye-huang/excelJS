@@ -1,5 +1,5 @@
 import './events/index'
-import './actions/test'
+import './actions/cell'
 // import { fromEvent, EMPTY, merge } from 'rxjs';
 // import { mapTo, startWith, scan } from 'rxjs/operators';
 

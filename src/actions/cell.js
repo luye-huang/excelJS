@@ -1,5 +1,5 @@
 import { Subject, fromEvent } from 'rxjs'
-import { filter, map, multicast, takeUntil, concatMap } from 'rxjs/operators'
+import { filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, repeat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
 
 
@@ -11,26 +11,32 @@ let rect = null
 
 // const multiMousedown = contextmenu$.pipe(multicast(() => new Subject()))
 // const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))
-
+console.log(concatMap)
 contextmenu$.subscribe((event) => {
     const x = event.clientX
     const y = event.clientY
     rect = new Rect(x, y)
 })
 
-contextmenu$.pipe(
-    concatMap(
-        mouseDownEvent => mousemove$.pipe(
-            map(mouseMoveEvent => ({
-                left: mouseMoveEvent.clientX,
-                top: mouseMoveEvent.clientY
-            })),
-            takeUntil(mouseup$)
-        )
-    )
+// contextmenu$.pipe(
+//     concatMap(
+//         mouseDownEvent => mousemove$.pipe(
+//             map(mouseMoveEvent => ({
+//                 left: mouseMoveEvent.clientX,
+//                 top: mouseMoveEvent.clientY
+//             })),
+//             takeUntil(mouseup$)
+//         )
+//     )
+// ).subscribe(position => {
+//     // console.log(position)
+//     rect.update({ x: position.left, y: position.top })
+// })
+// mousemove$.subscribe(console.log)
+mousemove$.pipe(
+    skipUntil(contextmenu$), takeUntil(mouseup$), repeat()
 ).subscribe(position => {
-    // console.log(position)
-    rect.update({ x: position.left, y: position.top })
+    rect.update({ x: position.clientX, y: position.clientY })
 })
 
 mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
@@ -76,14 +82,5 @@ mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
 // ).subscribe(position => {
 //     eleDrag.style.left = position.left + 'px'
 //     eleDrag.style.top = position.top + 'px'
-// })
-
-// mousemove$.subscribe({
-//     next: () => console.log('moving'),
-//     complete: () => console.log(complete)
-// })
-
-// mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
-//     console.log('right click done')
 // })
 

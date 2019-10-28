@@ -9,6 +9,7 @@ const mousemove$ = fromEvent(delegate, 'mousemove')
 const mouseup$ = fromEvent(delegate, 'mouseup')
 let rect = null
 
+
 // const multiMousedown = contextmenu$.pipe(multicast(() => new Subject()))
 // const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))
 console.log(concatMap)
@@ -18,6 +19,10 @@ contextmenu$.subscribe((event) => {
     rect = new Rect(x, y)
 })
 
+// 静态方法都是传入多个observable，比如merge concat combineLatest
+// 从两个observable中组合数据可能要用map
+// 两个事件observable都为持续性，同时写入一个observable可能无法订阅成功
+// 另一种写法
 // contextmenu$.pipe(
 //     concatMap(
 //         mouseDownEvent => mousemove$.pipe(
@@ -32,7 +37,8 @@ contextmenu$.subscribe((event) => {
 //     // console.log(position)
 //     rect.update({ x: position.left, y: position.top })
 // })
-// mousemove$.subscribe(console.log)
+
+// 另一种写法 combineLatest(contextmenu$, mousemove$.pipe(takeUntil(mouseup$))).subscribe(console.log)
 mousemove$.pipe(
     skipUntil(contextmenu$), takeUntil(mouseup$), repeat()
 ).subscribe(position => {

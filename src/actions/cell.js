@@ -12,7 +12,7 @@ let rect = null
 
 // const multiMousedown = contextmenu$.pipe(multicast(() => new Subject()))
 // const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))
-console.log(concatMap)
+
 contextmenu$.subscribe((event) => {
     const x = event.clientX
     const y = event.clientY

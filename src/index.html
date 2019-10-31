@@ -43,6 +43,29 @@
         haha
     </div>
     <script src="../dist/index.js"></script>
+    <script>
+        // var a;
+        if (true) {
+            function a() { }
+            a = 5
+            a = 0
+            console.log(a)
+        }
+        console.log(a)
+        const fn1 = (a, b, c, d) => {
+            return a - b * c + d
+        }
+        const fn2 = bindLeft(fn1, 1, 2)
+        function bindLeft() {
+            var arg = arguments
+            return function () {
+                arg = [...arg]
+                const fn = arg.shift()
+                return fn(...arg.concat([...arguments]))
+            }
+        }
+        console.log(fn2(3, 4))
+    </script>
 </body>
 
 </html>

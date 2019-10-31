@@ -1,14 +1,19 @@
-import { Subject, fromEvent } from 'rxjs'
-import { filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, repeat } from 'rxjs/operators'
+import { Subject, fromEvent, of } from 'rxjs'
+import { filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
+import { pow, check } from '../common/observable.ts'
 
+of(3).pipe(pow(2), pow(3)).subscribe(console.log)
+const test = of(5)
+const testClick = fromEvent(document, 'click')
+// test.pipe(filter(x => x > 9), concatMapTo(testClick)).subscribe(console.log)
+check(test, testClick, x => x > 4).subscribe(console.log)
 
 const delegate = document.getElementById('cluster')
 const contextmenu$ = fromEvent(delegate, 'contextmenu')
 const mousemove$ = fromEvent(delegate, 'mousemove')
 const mouseup$ = fromEvent(delegate, 'mouseup')
 let rect = null
-
 
 // const multiMousedown = contextmenu$.pipe(multicast(() => new Subject()))
 // const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))

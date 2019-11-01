@@ -1,13 +1,44 @@
-import { Subject, fromEvent, of } from 'rxjs'
-import { filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat } from 'rxjs/operators'
+import { Subject, fromEvent, of, from, BehaviorSubject } from 'rxjs'
+import { tap, filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
 import { pow, check } from '../common/observable.ts'
+import { watch } from '../common/watcher.ts'
 
-of(3).pipe(pow(2), pow(3)).subscribe(console.log)
-const test = of(5)
-const testClick = fromEvent(document, 'click')
-// test.pipe(filter(x => x > 9), concatMapTo(testClick)).subscribe(console.log)
-check(test, testClick, x => x > 4).subscribe(console.log)
+let obj = {}
+
+const proxy = watch([
+    { name: printA, conditions: [['a', (x) => x > 5], ['c', (x) => x < 5]] },
+    { name: printB, conditions: [['a', (x) => x > 50], ['c', (x) => x < 5]] }], obj)
+
+
+function printA() {
+    console.log('A')
+}
+
+function printB() {
+    console.log('B')
+}
+
+proxy.a = 10
+proxy.c = 1
+
+// obj.a = 10
+// obj.c = 1
+// var num = 2
+// var test = new BehaviorSubject(obj)
+// var test2 = new BehaviorSubject(num)
+// test.subscribe(console.log)
+// const testClick = fromEvent(document, 'click')
+// // test.pipe(filter(x => x > 9), concatMapTo(testClick)).subscribe(console.log)
+// // check(test, x => x > 14, testClick).subscribe(val =>
+// //     console.log(val)
+// // )
+// test.pipe(tap(x => console.log('tap', x)), filter(x => x.a > 4), filter(x => x.b > 4)).subscribe(x => console.log(x))
+
+// test.next({ a: 5 })
+// console.log(obj, 1)
+// test.next({ a: 5, b: 5 })
+// console.log(obj, 2)
 
 const delegate = document.getElementById('cluster')
 const contextmenu$ = fromEvent(delegate, 'contextmenu')

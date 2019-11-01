@@ -18,12 +18,6 @@ interface prefab {
 }
 
 
-// function f(): {};
-// function f<A>(a: A): {};
-// function f<A>(a: A, ...rest: any[]): {};
-// function f(...rest: any[]): {} {
-//   return {};
-// }
 // [{ name: printA, conditions: [(x) => x > 5, (x) => x < 5] },
 // { name: printB, conditions: [(x) => x > 50, (x) => x < 5] }]
 export const watch = <T extends action<T>>(actions: Array<T>, component: prefab) => {

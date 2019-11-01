@@ -1,15 +1,18 @@
-import { Subject, fromEvent, of, from, BehaviorSubject } from 'rxjs'
+import { Subject, fromEvent, of, from, BehaviorSubject, combineLatest } from 'rxjs'
 import { tap, filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
 import { pow, check } from '../common/observable.ts'
-import { watch } from '../common/watcher.ts'
+import { watch } from '../common/watcher'
 
 let obj = {}
 
 const proxy = watch([
     { name: printA, conditions: [['a', (x) => x > 5], ['c', (x) => x < 5]] },
-    { name: printB, conditions: [['a', (x) => x > 50], ['c', (x) => x < 5]] }], obj)
-
+    {
+        name: printB,
+        conditions: [['a', (x) => x > 50], ['c', (x) => x < 5]],
+        events: [['click', document], ['contextmenu', document]]
+    }], obj)
 
 function printA() {
     console.log('A')
@@ -19,8 +22,11 @@ function printB() {
     console.log('B')
 }
 
-proxy.a = 10
+proxy.a = 6
 proxy.c = 1
+proxy.a = 55
+
+
 
 // obj.a = 10
 // obj.c = 1

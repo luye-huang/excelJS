@@ -1,0 +1,41 @@
+.selecting-cell{
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    outline: none;
+    // background-color: #dd524d;
+    // border-radius: 5px;
+    // transform-origin: 0 0;
+    // opacity: .7;
+	border: 1px solid red;
+}
+// .selecting-cell::after {
+// 	content: "";
+//     -webkit-border-radius: 100%;
+//     border-radius: 5px;
+//     height: 100%;
+//     width: 90%;
+//     position: absolute;
+//     box-shadow: 0 0 5px 6px #dd524d; //带阴影的边框，可以换成背景
+//     animation: pulsate 1s ease-out;
+//     animation-iteration-count: infinite;
+//     animation-delay: 1.1s;
+//     top: 0;
+//     left: 5%;
+// }
+// @keyframes pulsate {
+// 	0% {
+// 		transform: scale(0.1, 0.1);
+// 		opacity: 0;
+// 		filter: alpha(opacity=0);
+// 	}
+// 	50% {
+// 		opacity: 1;
+// 		filter: none;
+// 	}
+// 	100% {
+// 		transform: scale(1.2, 1.2);
+// 		opacity: 0;
+// 		filter: alpha(opacity=0);
+// 	}
+// } 

@@ -5,3 +5,9 @@ export type Coordinate = {
     // readonly salary: id,  //表示是只读的属性,但是在初始化之后不能重新赋值，否则会报错
     // [ propName : string ] : any,  // 任意类型
 }
+export type DualCell = {
+    x1: number | string,
+    y1: number | string,
+    x2: number | string,
+    y2: number | string
+}

@@ -1,63 +1,22 @@
 import { Subject, fromEvent, of, from, BehaviorSubject, combineLatest } from 'rxjs'
-import { tap, filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat } from 'rxjs/operators'
+import { tap, filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat, concat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
-import { pow, check } from '../common/observable.ts'
-import { watch } from '../common/watcher'
+import {selectedRect} from '../components/selectedRect.ts'
 
-// let obj = {}
-
-// const proxy = watch([
-//     { name: printA, conditions: [['a', (x) => x > 5], ['c', (x) => x < 5]] },
-//     {
-//         name: printB,
-//         conditions: [['a', (x) => x > 50], ['c', (x) => x < 5]],
-//         events: [['click', document], ['contextmenu', document]]
-//     }], obj)
-
-// function printA() {
-//     console.log('A')
-// }
-
-// function printB() {
-//     console.log('B')
-// }
-
-// proxy.a = 6
-// proxy.c = 1
-// proxy.a = 55
-
-
-
-// obj.a = 10
-// obj.c = 1
-// var num = 2
-// var test = new BehaviorSubject(obj)
-// var test2 = new BehaviorSubject(num)
-// test.subscribe(console.log)
-// const testClick = fromEvent(document, 'click')
-// // test.pipe(filter(x => x > 9), concatMapTo(testClick)).subscribe(console.log)
-// // check(test, x => x > 14, testClick).subscribe(val =>
-// //     console.log(val)
-// // )
-// test.pipe(tap(x => console.log('tap', x)), filter(x => x.a > 4), filter(x => x.b > 4)).subscribe(x => console.log(x))
-
-// test.next({ a: 5 })
-// console.log(obj, 1)
-// test.next({ a: 5, b: 5 })
-// console.log(obj, 2)
 
 const delegate = document.getElementById('cluster')
+const cells = delegate.querySelectorAll('cell')
+const mouseenter$ = fromEvent(cells, 'mouseenter')
+// const mouseleave$ = fromEvent(cells, 'mouseleave')
 const contextmenu$ = fromEvent(delegate, 'contextmenu')
 const mousemove$ = fromEvent(delegate, 'mousemove')
 const mouseup$ = fromEvent(delegate, 'mouseup')
-let rect = null
-
-// const multiMousedown = contextmenu$.pipe(multicast(() => new Subject()))
-// const multiMouseup = mouseup$.pipe(multicast(() => new Subject()))
+let rect = null, selected = null, selectedCells = []
 
 contextmenu$.subscribe((event) => {
     const x = event.clientX
     const y = event.clientY
+    selectedCells = []
     rect = new Rect(x, y)
 })
 
@@ -87,28 +46,54 @@ mousemove$.pipe(
     rect.update({ x: position.clientX, y: position.clientY })
 })
 
+
+contextmenu$.pipe(
+    concatMapTo(mouseenter$.pipe(
+        takeUntil(mouseup$)
+    ))
+).subscribe(() => {
+    if (selectedCells.length > 1) {
+        selectedCells[1] = event.target
+    } else {
+        selectedCells.push(event.target)
+    }
+})
+
 mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
+    // console.log(mergingCells)
     rect.destroy()
     rect = null
+    const endpoints = {
+        y1: selectedCells[0].getAttribute('row'),
+        x1: selectedCells[0].getAttribute('column'),
+        y2: selectedCells[1].getAttribute('row'),
+        x2: selectedCells[1].getAttribute('column'),
+    }
+    console.log('endpoint:', endpoints)
+    selected = new selectedRect(endpoints, delegate)
 })
+
+
+// contextmenu$.pipe(
+//     concatMap(initEvent => mouseup$.pipe(
+//         tap(event => event.initTarget = initEvent.target)
+//     ))
+// ).subscribe((event) => {
+//     console.log(event)
+//     rect.destroy()
+//     rect = null
+//     const endpoints = {
+//         x1: event.initTarget.getAttribute('row'),
+//         y1: event.initTarget.getAttribute('column'),
+//         x2: event.target.getAttribute('row'),
+//         y2: event.target.getAttribute('column'),
+//     }
+//     selected = new selectedRect(endpoints)
+// })
 
 // mouseup$.subscribe((x) => {
 //     console.log(x)
 // })
-
-// contextmenu$.pipe(
-//     concatMap(
-//         // mousemove$,
-//         mouseDownEvent => mousemove$.pipe(
-//             map(mouseMoveEvent => 2),
-//             takeUntil(mouseup$)
-//         )
-//     )
-// ).subscribe(position => {
-//     console.log('right click')
-// })
-
-
 
 // mouseDown$.pipe(
 //     concatMap(
@@ -131,4 +116,9 @@ mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
 //     eleDrag.style.left = position.left + 'px'
 //     eleDrag.style.top = position.top + 'px'
 // })
+
+
+
+
+
 

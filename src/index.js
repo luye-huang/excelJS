@@ -49,14 +49,27 @@ function forTest(a, b) {
     return a + b
 }
 
-// describe('My First Test', function () {
-//     it('Does not do much!', function () {
-//         expect(true).to.equal(true)
-//     })
 
+import { watch } from './common/watcher'
 
-//     it('Corrent directory!', function () {
-    
-//         expect(forTest(2, 4)).to.equal(7)
-//     })
-// })
+// let obj = {}
+
+// const proxy = watch([
+//     { name: printA, conditions: [['a', (x) => x > 5], ['c', (x) => x < 5]] },
+//     {
+//         name: printB,
+//         conditions: [['a', (x) => x > 50], ['c', (x) => x < 5]],
+//         events: [['click', document], ['contextmenu', document]]
+//     }], obj)
+
+// function printA() {
+//     console.log('A')
+// }
+
+// function printB() {
+//     console.log('B')
+// }
+
+// proxy.a = 6
+// proxy.c = 1
+// proxy.a = 55

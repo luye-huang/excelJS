@@ -1,27 +1,24 @@
 import { Subject, fromEvent, of, from, BehaviorSubject, combineLatest } from 'rxjs'
-import { tap, filter, map, multicast, take, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat, concat } from 'rxjs/operators'
+import { tap, filter, map, multicast, takeUntil, takeWhile, skipUntil, concatMap, concatMapTo, repeat, concat } from 'rxjs/operators'
 import Rect from '../components/mergingRect.ts'
-import { selectedRect } from '../components/selectedRect.ts'
+import {selectedRect} from '../components/selectedRect.ts'
 
 
-const click$ = fromEvent(document, 'click')
-click$.subscribe(() => console.log)
-
-// const delegate = document.getElementById('cluster')
-// const cells = delegate.querySelectorAll('cell')
-// const mouseenter$ = fromEvent(cells, 'mouseenter')
+const delegate = document.getElementById('cluster')
+const cells = delegate.querySelectorAll('cell')
+const mouseenter$ = fromEvent(cells, 'mouseenter')
 // const mouseleave$ = fromEvent(cells, 'mouseleave')
-// const contextmenu$ = fromEvent(delegate, 'contextmenu')
-// const mousemove$ = fromEvent(delegate, 'mousemove')
-// const mouseup$ = fromEvent(delegate, 'mouseup')
-// let rect = null, selected = null, selectedCells = []
+const contextmenu$ = fromEvent(delegate, 'contextmenu')
+const mousemove$ = fromEvent(delegate, 'mousemove')
+const mouseup$ = fromEvent(delegate, 'mouseup')
+let rect = null, selected = null, selectedCells = []
 
-// contextmenu$.subscribe((event) => {
-//     const x = event.clientX
-//     const y = event.clientY
-//     selectedCells = []
-//     rect = new Rect(x, y)
-// })
+contextmenu$.subscribe((event) => {
+    const x = event.clientX
+    const y = event.clientY
+    selectedCells = []
+    rect = new Rect(x, y)
+})
 
 // 静态方法都是传入多个observable，比如merge concat combineLatest
 // 从两个observable中组合数据可能要用map
@@ -43,38 +40,38 @@ click$.subscribe(() => console.log)
 // })
 
 // 另一种写法 combineLatest(contextmenu$, mousemove$.pipe(takeUntil(mouseup$))).subscribe(console.log)
-// mousemove$.pipe(
-//     skipUntil(contextmenu$), takeUntil(mouseup$), repeat()
-// ).subscribe(position => {
-//     rect.update({ x: position.clientX, y: position.clientY })
-// })
+mousemove$.pipe(
+    skipUntil(contextmenu$), takeUntil(mouseup$), repeat()
+).subscribe(position => {
+    rect.update({ x: position.clientX, y: position.clientY })
+})
 
 
-// contextmenu$.pipe(
-//     concatMapTo(mouseenter$.pipe(
-//         takeUntil(mouseup$)
-//     ))
-// ).subscribe(() => {
-//     if (selectedCells.length > 1) {
-//         selectedCells[1] = event.target
-//     } else {
-//         selectedCells.push(event.target)
-//     }
-// })
+contextmenu$.pipe(
+    concatMapTo(mouseenter$.pipe(
+        takeUntil(mouseup$)
+    ))
+).subscribe(() => {
+    if (selectedCells.length > 1) {
+        selectedCells[1] = event.target
+    } else {
+        selectedCells.push(event.target)
+    }
+})
 
-// mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
-//     // console.log(mergingCells)
-//     rect.destroy()
-//     rect = null
-//     const endpoints = {
-//         y1: selectedCells[0].getAttribute('row'),
-//         x1: selectedCells[0].getAttribute('column'),
-//         y2: selectedCells[1].getAttribute('row'),
-//         x2: selectedCells[1].getAttribute('column'),
-//     }
-//     console.log('endpoint:', endpoints)
-//     selected = new selectedRect(endpoints, delegate)
-// })
+mouseup$.pipe(filter(ev => ev.button == 2)).subscribe(() => {
+    // console.log(mergingCells)
+    rect.destroy()
+    rect = null
+    const endpoints = {
+        y1: selectedCells[0].getAttribute('row'),
+        x1: selectedCells[0].getAttribute('column'),
+        y2: selectedCells[1].getAttribute('row'),
+        x2: selectedCells[1].getAttribute('column'),
+    }
+    console.log('endpoint:', endpoints)
+    selected = new selectedRect(endpoints, delegate)
+})
 
 
 // contextmenu$.pipe(
@@ -122,7 +119,6 @@ click$.subscribe(() => console.log)
 
 
 
-// const click$ = fromEvent(delegate, 'click')
-// click$.pipe(take(4)).subscribe(console.log)
+
 
 

@@ -1,4 +1,4 @@
-import {Subscriber} from './Subscriber'
+import { Subscriber } from './Subscriber'
 // const type 
 
 export class Observable<T> {
@@ -8,8 +8,11 @@ export class Observable<T> {
         this._subscribe = subscribe
     }
 
-    pipe() {
+    pipe(operators: Array<T>) {
+        operators.forEach(() => {
 
+        })
+        // return
     }
 
     subscribe(next: Function, complete?: () => void, error?: () => void) {

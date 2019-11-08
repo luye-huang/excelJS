@@ -1,4 +1,5 @@
 import {Subscriber} from './Subscriber'
+// const type 
 
 export class Observable<T> {
     _subscribe: Function;
